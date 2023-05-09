@@ -5,6 +5,7 @@ class Node:
         self.k = k
         self.x = x
         self.next = None
+        self.size = 0
 
 class Set(object):
     def __init__(self):
@@ -13,6 +14,9 @@ class Set(object):
         self.table = [None] * self.M
         
     def insert(self, x):
+        if self.size + 1 >= M: # если скоро место кончится
+            self.M *= 2
+
         #если индекс свободен, кладем туда значение
         #если нет, все равно кладем, просто новое
         M = self.M
@@ -20,6 +24,7 @@ class Set(object):
         while not(self.table[i] is None):
             i = (i + i) % M
         self.table[i] = x
+        self.size += 1
         
     def exists(self, x):
         M = self.M
@@ -36,6 +41,7 @@ class Set(object):
         while not(self.table[i] is None):
             if self.table[i] == x:
                 self.table[i] = None
+                self.size -= 1
                 break
             i = (i + i) % M
     def doRehashing(): #для сета вроде не понадобился 
